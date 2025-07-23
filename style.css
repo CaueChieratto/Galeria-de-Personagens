@@ -3,15 +3,26 @@ body {
   text-align: center;
   background: #f0f0f0;
   padding: 30px;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark {
+  background: #121212;
+  color: #ffffff;
 }
 
 .container {
-  max-width: 400px;
+  max-width: 500px;
   margin: auto;
   background: white;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.dark .container {
+  background: #1f1f1f;
+  color: #fff;
 }
 
 .card img {
@@ -40,19 +51,31 @@ button {
   color: white;
   cursor: pointer;
   font-size: 16px;
+  transition: background 0.2s;
 }
 
 button:hover {
   background: #1a50a0;
 }
 
-.favorites {
-  margin-top: 20px;
-  text-align: left;
+hr {
+  margin: 30px 0;
+  border: none;
+  border-top: 1px solid #ccc;
 }
 
-.hidden {
-  display: none;
+.favorites-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.favorites-controls input,
+.favorites-controls select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
 .favorite-card {
@@ -63,6 +86,11 @@ button:hover {
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+body.dark .favorite-card {
+  background: #333;
 }
 
 .favorite-card img {
@@ -73,4 +101,29 @@ button:hover {
 
 .favorite-card .info {
   flex-grow: 1;
+  text-align: left;
+}
+
+.remove-btn {
+  background: red;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background: darkred;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.hidden {
+  display: none;
 }

@@ -8,14 +8,30 @@
   </head>
   <body>
     <div class="container">
-      <h1>Vote no seu personagem favorito</h1>
-      <div id="cardContainer" class="card"></div>
-      <div class="buttons">
-        <button id="passBtn">Passar</button>
-        <button id="likeBtn">Curtir</button>
-      </div>
-      <button id="showFavorites">Ver Favoritos</button>
-      <div id="favoritesContainer" class="favorites hidden"></div>
+      <header>
+        <h1>Vote no seu personagem favorito</h1>
+        <div class="top-bar">
+          <span id="likesCount">Curtidos: 0</span>
+        </div>
+      </header>
+
+      <main>
+        <div id="cardContainer" class="card"></div>
+
+        <div class="buttons">
+          <button id="passBtn">Passar</button>
+          <button id="likeBtn">Curtir</button>
+        </div>
+
+        <hr />
+
+        <div class="favorites-controls">
+          <button id="showFavorites">⭐ Ver Favoritos</button>
+          <button id="clearFavorites">🧹 Limpar Todos</button>
+        </div>
+
+        <div id="favoritesContainer" class="favorites hidden"></div>
+      </main>
     </div>
 
     <script src="script.js"></script>

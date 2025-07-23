@@ -12,9 +12,11 @@ Este projeto é uma pequena aplicação web que consome a [Rick and Morty API](h
 
 - 🔄 Exibe personagens de forma embaralhada (shuffle).
 - 💚 Permite dar "like" em personagens.
-- ⭐ Mostra os personagens curtidos (favoritos).
-- 💾 Os personagens curtidos são armazenados no `localStorage`.
-- 👥 Interface simples e interativa com botões de "Curtir", "Próximo" e "Favoritos".
+- 📋 Mostra personagens curtidos (favoritos).
+- 🗑️ Permite remover personagens individualmente ou todos de uma vez.
+- 💾 Armazena curtidas usando `localStorage`.
+- 🔢 Contador de curtidas em tempo real.
+- 👥 Interface simples e direta com botões de **Curtir**, **Próximo**, **Favoritos** e **Limpar Favoritos**.
 
 ---
 
@@ -26,7 +28,7 @@ Este projeto é uma pequena aplicação web que consome a [Rick and Morty API](h
 - Os personagens recebidos são embaralhados para exibição aleatória.
 - O primeiro personagem é exibido automaticamente na tela.
 
-### 2. Botão "Próximo"
+### 2. Botão "Passar"
 
 - Avança para o próximo personagem embaralhado.
 - Retorna ao início da lista ao chegar no fim.
@@ -36,11 +38,22 @@ Este projeto é uma pequena aplicação web que consome a [Rick and Morty API](h
 - Salva o personagem atual na lista de curtidos, desde que ainda não tenha sido curtido.
 - Garante que o mesmo personagem não seja curtido duas vezes (verifica por `id`).
 - Armazena os personagens curtidos em `localStorage`.
+- O contador de curtidas (`Curtidos: N`) é atualizado a cada nova curtida.
 
-### 4. Botão "Favoritos"
+### 4. Botão "Ver Favoritos"
 
-- Alterna a exibição de uma seção que mostra os personagens curtidos.
-- Exibe imagem, nome, status e espécie de cada personagem favorito.
+- O botão **Ver Favoritos** alterna a exibição de uma seção com todos os personagens curtidos.
+- Cada favorito mostra:
+  - Imagem
+  - Nome
+  - Status
+  - Espécie
+  - Botão de remover ❌
+
+### 5. Remoção
+
+- O botão ❌ remove um personagem curtido individualmente da lista e do `localStorage`.
+- O botão **Limpar Favoritos** remove **todos** os personagens curtidos e recarrega a página.
 
 ---
 

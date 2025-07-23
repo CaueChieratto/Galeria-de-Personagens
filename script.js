@@ -1,10 +1,37 @@
 const url = "https://rickandmortyapi.com/api/character";
 const cardContainer = document.getElementById("cardContainer");
+const passBtn = document.getElementById("passBtn");
+const likeBtn = document.getElementById("likeBtn");
+const showFavoritesBtn = document.getElementById("showFavorites");
+const clearFavorites = document.getElementById("clearFavorites");
+
+fetch(url)
+  .then((res) => res.json())
+  .then((list) => {
+    currentCharacterList = shuffle(list.results);
+    currentIndex = 0;
+    showRandomCharacter();
+  })
+  .catch((err) => console.log(err));
 
 let currentCharacterList = null;
 let currentIndex = 0;
+let listenerCount = 0;
 
 let likeCharacters = JSON.parse(localStorage.getItem("likeCharacters")) || [];
+
+passBtn.addEventListener("click", () => {
+  showNextCharacter();
+});
+
+likeBtn.addEventListener("click", () => {
+  saveLikeCharacter();
+  likesCount();
+});
+
+showFavoritesBtn.addEventListener("click", () => showLikeCharacters());
+
+clearFavorites.addEventListener("click", () => removeAllLikeCharacters());
 
 function updateLikes() {
   localStorage.setItem("likeCharacters", JSON.stringify(likeCharacters));
@@ -17,15 +44,6 @@ function shuffle(array) {
   }
   return array;
 }
-
-fetch(url)
-  .then((res) => res.json())
-  .then((list) => {
-    currentCharacterList = shuffle(list.results);
-    currentIndex = 0;
-    showRandomCharacter();
-  })
-  .catch((err) => console.log(err));
 
 function showNextCharacter() {
   currentIndex++;
@@ -48,16 +66,6 @@ function showRandomCharacter() {
     `;
 }
 
-const passBtn = document.getElementById("passBtn");
-passBtn.addEventListener("click", () => {
-  showNextCharacter();
-});
-
-const likeBtn = document.getElementById("likeBtn");
-likeBtn.addEventListener("click", () => {
-  saveLikeCharacter();
-});
-
 function saveLikeCharacter() {
   if (!currentCharacterList) {
     console.error("Lista de personagens não disponível.");
@@ -77,15 +85,13 @@ function saveLikeCharacter() {
     showNextCharacter();
     return;
   }
+  listenerCount++;
 
   likeCharacters.push(compare);
   updateLikes();
 
   showNextCharacter();
 }
-
-const showFavoritesBtn = document.getElementById("showFavorites");
-showFavoritesBtn.addEventListener("click", () => showLikeCharacters());
 
 function showLikeCharacters() {
   const favoritesContainer = document.getElementById("favoritesContainer");
@@ -104,10 +110,52 @@ function showLikeCharacters() {
         <p><strong>Status:</strong> ${characterLike.status}</p>
         <p><strong>Espécie:</strong> ${characterLike.species}</p>
       </div>
+      <button class="remove-btn" data-id="${characterLike.id}">❌</button>
     `;
       favoritesContainer.appendChild(card);
     });
+    removeLikeCharacter();
   } else {
     favoritesContainer.classList.add("hidden");
   }
+}
+
+function removeLikeCharacter() {
+  const removeLikeCharacterBtn = document.querySelectorAll(".remove-btn");
+
+  removeLikeCharacterBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const idCharacterToRemove = btn.getAttribute("data-id");
+
+      const characterToRemove = likeCharacters.find(
+        (c) => String(c.id) === String(idCharacterToRemove)
+      );
+
+      if (characterToRemove) {
+        likeCharacters = likeCharacters.filter(
+          (c) => String(c.id) !== String(characterToRemove.id)
+        );
+
+        updateLikes();
+        btn.closest(".favorite-card").remove();
+      }
+    });
+  });
+}
+
+function removeAllLikeCharacters() {
+  const cardFavorite = document.querySelectorAll(".favorite-card");
+
+  localStorage.clear();
+
+  cardFavorite.forEach((card) => {
+    card.remove();
+  });
+
+  window.location.reload();
+}
+
+function likesCount() {
+  const count = document.getElementById("likesCount");
+  count.textContent = `Curtidos: ${listenerCount}`;
 }
